@@ -7,15 +7,30 @@ import android.view.Menu;
 import android.widget.SearchView;
 
 import com.gsc.recipes.R;
+import com.gsc.recipes.domain.model.Recipe;
+import com.gsc.recipes.ui.base.BaseActivity;
 
-public class RecipeListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class RecipeListActivity extends BaseActivity implements RecipeListView,
+        SearchView.OnQueryTextListener {
+
+    @Inject
+    RecipeListPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDagger();
         setContentView(R.layout.activity_recipe_list);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        presenter.setView(this);
     }
 
     @Override
@@ -28,6 +43,15 @@ public class RecipeListActivity extends AppCompatActivity implements SearchView.
         return true;
     }
 
+    @Override
+    protected void onDestroy() {
+        presenter.destroy();
+        super.onDestroy();
+    }
+
+    private void initializeDagger() {
+        getActivityComponent().inject(this);
+    }
 
     //region OnQueryTextListener
     @Override
@@ -38,6 +62,13 @@ public class RecipeListActivity extends AppCompatActivity implements SearchView.
     @Override
     public boolean onQueryTextChange(String newText) {
         return false;
+    }
+    //endregion
+
+    //region RecipeListView
+    @Override
+    public void setRecipes(List<Recipe> recipes) {
+
     }
     //endregion
 }
