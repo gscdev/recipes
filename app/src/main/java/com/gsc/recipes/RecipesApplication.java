@@ -2,14 +2,14 @@ package com.gsc.recipes;
 
 import android.app.Application;
 
-import com.gsc.recipes.di.components.AppComponent;
-import com.gsc.recipes.di.components.DaggerAppComponent;
-import com.gsc.recipes.di.modules.AppModule;
+import com.gsc.recipes.di.components.ApplicationComponent;
+import com.gsc.recipes.di.components.DaggerApplicationComponent;
+import com.gsc.recipes.di.modules.ApplicationModule;
 
 
 public class RecipesApplication extends Application {
 
-    private static AppComponent component;
+    private static ApplicationComponent component;
     
     @Override
     public void onCreate() {
@@ -19,13 +19,13 @@ public class RecipesApplication extends Application {
     }
 
     //region Dagger
-    private AppComponent buildComponent() {
-        return DaggerAppComponent.builder()
-                .appModule(new AppModule(this))
+    private ApplicationComponent buildComponent() {
+        return DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
                 .build();
     }
 
-    public static AppComponent getComponent() {
+    public static ApplicationComponent getApplicationComponent() {
         return component;
     }
     //endregion
