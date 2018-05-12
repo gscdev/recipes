@@ -26,6 +26,8 @@ ext {
     supportVersion = '27.1.0'
     constraintVersion = '1.1.0'
     daggerVersion = '2.16'
+    retrofitVersion = '2.4.0'
+    okhttpVersion = '3.4.0'
 }
 
 task clean(type: Delete) {

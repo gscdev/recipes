@@ -5,6 +5,7 @@ import android.app.Application;
 import com.gsc.recipes.di.components.ApplicationComponent;
 import com.gsc.recipes.di.components.DaggerApplicationComponent;
 import com.gsc.recipes.di.modules.ApplicationModule;
+import com.gsc.recipes.di.modules.NetworkModule;
 
 
 public class RecipesApplication extends Application {
@@ -22,6 +23,7 @@ public class RecipesApplication extends Application {
     private ApplicationComponent buildComponent() {
         return DaggerApplicationComponent.builder()
                 .applicationModule(new ApplicationModule(this))
+                .networkModule(new NetworkModule())
                 .build();
     }
 
