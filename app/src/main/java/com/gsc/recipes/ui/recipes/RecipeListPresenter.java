@@ -64,5 +64,6 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
     //endregion
 
     public void onRecipeClick(int position) {
+        getView().showRecipe(recipeList.get(position));
     }
 }

@@ -10,6 +10,7 @@ import android.widget.SearchView;
 import com.gsc.recipes.R;
 import com.gsc.recipes.domain.model.Recipe;
 import com.gsc.recipes.ui.base.BaseActivity;
+import com.gsc.recipes.ui.recipes.detail.RecipeDetailActivity;
 import com.gsc.recipes.ui.view.OnItemClickListener;
 
 import java.util.List;
@@ -83,6 +84,11 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
     @Override
     public void setRecipes(List<Recipe> recipes) {
         recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes, this));
+    }
+
+    @Override
+    public void showRecipe(Recipe recipe) {
+        RecipeDetailActivity.open(this, recipe);
     }
     //endregion
 
