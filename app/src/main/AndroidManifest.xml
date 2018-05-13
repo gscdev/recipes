@@ -15,7 +15,8 @@
 
         <activity
             android:name=".ui.recipes.RecipeListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.SEARCH" />
@@ -29,7 +30,8 @@
         <activity
             android:name=".ui.recipes.detail.RecipeDetailActivity"
             android:parentActivityName=".ui.recipes.RecipeListActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

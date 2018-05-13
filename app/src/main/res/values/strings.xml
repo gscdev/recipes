@@ -7,4 +7,6 @@
     <string name="web_reference">Web reference</string>
     
     <string name="you_dont_have_recipes">Looks like you don\'t have recipes</string>
+
+    <string name="error_message">Ups, something went wrong :-(</string>
 </resources>

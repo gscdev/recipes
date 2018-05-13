@@ -58,6 +58,7 @@ public class RecipeDetailActivity extends BaseActivity implements RecipeDetailVi
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
         collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
 
         presenter.create();

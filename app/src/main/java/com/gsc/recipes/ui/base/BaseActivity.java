@@ -3,7 +3,9 @@ package com.gsc.recipes.ui.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.gsc.recipes.R;
 import com.gsc.recipes.RecipesApplication;
 import com.gsc.recipes.di.components.ActivityComponent;
 import com.gsc.recipes.di.components.ApplicationComponent;
@@ -28,5 +30,9 @@ public class BaseActivity extends AppCompatActivity {
                 .activityModule(new ActivityModule(this))
                 .applicationComponent(RecipesApplication.getApplicationComponent())
                 .build();
+    }
+
+    public void showErrorMessage() {
+        Toast.makeText(this, R.string.error_message, Toast.LENGTH_SHORT).show();
     }
 }

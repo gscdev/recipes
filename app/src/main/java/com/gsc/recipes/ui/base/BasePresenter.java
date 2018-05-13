@@ -19,7 +19,7 @@ public abstract class BasePresenter<T extends BasePresenter.View> {
         view = null;
     }
 
-
     public interface View {
+        void showErrorMessage();
     }
 }

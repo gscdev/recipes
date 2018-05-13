@@ -73,7 +73,7 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
 
     @Override
     public void onError() {
-        recipeList = emptyList();
+        getView().showErrorMessage();
     }
     //endregion
 
