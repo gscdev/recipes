@@ -10,14 +10,20 @@ import android.view.View;
 
 import com.gsc.recipes.R;
 import com.gsc.recipes.domain.model.Recipe;
+import com.gsc.recipes.ui.base.BaseActivity;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class RecipeDetailActivity extends AppCompatActivity {
+public class RecipeDetailActivity extends BaseActivity implements RecipeDetailView {
 
     public static final String EXTRA_RECIPE = "com.gsc.recipes.ui.recipes.detail.Recipe";
+
+    @Inject
+    RecipeDetailPresenter presenter;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -32,12 +38,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeDagger();
         setContentView(R.layout.activity_recipe);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        presenter.create();
+        presenter.setView(this);
+    }
+
+    private void initializeDagger() {
+        getActivityComponent().inject(this);
     }
 
     @OnClick(R.id.fab)
