@@ -1,7 +1,8 @@
 package com.gsc.recipes.ui.recipes;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.SearchView;
@@ -14,11 +15,19 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class RecipeListActivity extends BaseActivity implements RecipeListView,
         SearchView.OnQueryTextListener {
 
     @Inject
     RecipeListPresenter presenter;
+
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.recipe_list)
+    RecyclerView recyclerView;
 
 
     @Override
@@ -26,10 +35,13 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
         super.onCreate(savedInstanceState);
         initializeDagger();
         setContentView(R.layout.activity_recipe_list);
+        ButterKnife.bind(this);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        presenter.create();
         presenter.setView(this);
     }
 
@@ -61,14 +73,15 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        return false;
+        presenter.onSearchTextChange(newText);
+        return true;
     }
     //endregion
 
     //region RecipeListView
     @Override
     public void setRecipes(List<Recipe> recipes) {
-
+        recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes));
     }
     //endregion
 }

@@ -1,6 +1,6 @@
 package com.gsc.recipes.ui.base;
 
-public class BasePresenter<T extends BasePresenter.View> {
+public abstract class BasePresenter<T extends BasePresenter.View> {
 
     private T view;
 
@@ -11,6 +11,9 @@ public class BasePresenter<T extends BasePresenter.View> {
     public T getView() {
         return view;
     }
+
+
+    public abstract void create();
 
     public void destroy() {
         view = null;
