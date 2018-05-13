@@ -5,14 +5,14 @@ import com.gsc.recipes.data.response.base.BaseResponse;
 
 import java.util.List;
 
+
 public class RecipesResponse extends BaseResponse {
 
     @SerializedName("results")
-    public List<Result> results = null;
+    public List<RecipeResponse> recipeResponses;
 
 
-
-    public class Result {
+    public class RecipeResponse {
 
         @SerializedName("title")
         public String title;
