@@ -40,13 +40,17 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
 
         holder.title.setText(recipe.getTitle());
         holder.ingredients.setText(recipe.getIngredients());
+        setImage(holder.image, recipe.getImage());
+    }
 
-        if (isEmpty(recipe.getImage())) {
-            holder.image.setImageDrawable(null);
+    private void setImage(ImageView imageView, String imageUrl) {
+        if (isEmpty(imageUrl)) {
+            imageView.setImageDrawable(null);
         } else {
-            Picasso.get().load(recipe.getImage()).into(holder.image);
+            Picasso.get().load(imageUrl).into(imageView);
         }
     }
+
 
     @Override
     public int getItemCount() {
