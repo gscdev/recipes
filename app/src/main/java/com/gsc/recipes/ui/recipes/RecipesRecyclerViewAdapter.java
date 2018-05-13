@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gsc.recipes.R;
 import com.gsc.recipes.domain.model.Recipe;
+import com.gsc.recipes.ui.view.OnItemClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,11 +22,15 @@ import static android.text.TextUtils.isEmpty;
 
 class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerViewAdapter.ViewHolder> {
 
-    List<Recipe> recipes;
+    private OnItemClickListener listener;
+    private List<Recipe> recipes;
 
-    public RecipesRecyclerViewAdapter(List<Recipe> recipes) {
+
+    public RecipesRecyclerViewAdapter(List<Recipe> recipes, OnItemClickListener<Integer> listener) {
         this.recipes = recipes;
+        this.listener = listener;
     }
+
 
     @NonNull
     @Override
@@ -41,6 +46,8 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
         holder.title.setText(recipe.getTitle());
         holder.ingredients.setText(recipe.getIngredients());
         setImage(holder.image, recipe.getImage());
+
+        holder.itemView.setOnClickListener(view -> listener.onItemClick(position));
     }
 
     private void setImage(ImageView imageView, String imageUrl) {

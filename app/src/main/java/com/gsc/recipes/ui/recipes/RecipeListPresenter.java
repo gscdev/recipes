@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static java.util.Collections.emptyList;
+
 public class RecipeListPresenter extends BasePresenter<RecipeListView>
         implements GetRecipesUseCase.Callback<List<Recipe>> {
 
@@ -16,6 +18,7 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
 
     private String lastSearchText = "";
     private SearchParams searchParams;
+    private List<Recipe> recipeList;
 
 
     @Inject
@@ -48,15 +51,19 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
     }
 
     //region GetRecipesUseCase.Callback
-
     @Override
     public void onSuccess(List<Recipe> recipeList) {
+        this.recipeList = recipeList;
         getView().setRecipes(recipeList);
     }
 
     @Override
     public void onError() {
-
+        recipeList = emptyList();
     }
     //endregion
+
+    public void onRecipeClick(int position) {
+        getView().showRecipe(recipeList.get(position));
+    }
 }
