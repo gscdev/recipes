@@ -54,6 +54,8 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
     @Override
     public void onSuccess(List<Recipe> recipeList) {
         this.recipeList = recipeList;
+
+        getView().hideWithoutRecipesText();
         getView().setRecipes(recipeList);
     }
 

@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface RecipeListView extends BasePresenter.View {
 
+    void showWithoutRecipesText();
+    void hideWithoutRecipesText();
+
     void setRecipes(List<Recipe> recipes);
 
     void showRecipe(Recipe recipe);

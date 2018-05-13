@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.View;
 import android.widget.SearchView;
 
 import com.gsc.recipes.R;
@@ -28,6 +29,8 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.without_recipes)
+    View withoutRecipesView;
     @BindView(R.id.recipe_list)
     RecyclerView recyclerView;
 
@@ -81,6 +84,16 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
     //endregion
 
     //region RecipeListView
+    @Override
+    public void showWithoutRecipesText() {
+        withoutRecipesView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideWithoutRecipesText() {
+        withoutRecipesView.setVisibility(View.GONE);
+    }
+
     @Override
     public void setRecipes(List<Recipe> recipes) {
         recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes, this));
