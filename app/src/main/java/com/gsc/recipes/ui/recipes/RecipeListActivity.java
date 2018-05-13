@@ -10,6 +10,7 @@ import android.widget.SearchView;
 import com.gsc.recipes.R;
 import com.gsc.recipes.domain.model.Recipe;
 import com.gsc.recipes.ui.base.BaseActivity;
+import com.gsc.recipes.ui.view.OnItemClickListener;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class RecipeListActivity extends BaseActivity implements RecipeListView,
-        SearchView.OnQueryTextListener {
+        SearchView.OnQueryTextListener, OnItemClickListener<Integer> {
 
     @Inject
     RecipeListPresenter presenter;
@@ -81,7 +82,14 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
     //region RecipeListView
     @Override
     public void setRecipes(List<Recipe> recipes) {
-        recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes));
+        recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes, this));
+    }
+    //endregion
+
+    //region OnItemClickListener
+    @Override
+    public void onItemClick(Integer position) {
+        presenter.onRecipeClick(position);
     }
     //endregion
 }
