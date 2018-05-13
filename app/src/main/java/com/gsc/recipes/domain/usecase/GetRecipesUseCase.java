@@ -33,8 +33,13 @@ public class GetRecipesUseCase extends BaseUseCase<SearchParams, BaseUseCase.Cal
                 getString(searchParams.getSearchText()),
                 searchParams.getPage());
 
-        List<Recipe> recipeList = recipeMapper.map(recipesResponse.recipeResponses);
+        if (recipesResponse == null) {
+            toMainThread(() -> callback.onError());
+        } else {
 
-        toMainThread(() -> callback.onSuccess(recipeList));
+            List<Recipe> recipeList = recipeMapper.map(recipesResponse.recipeResponses);
+
+            toMainThread(() -> callback.onSuccess(recipeList));
+        }
     }
 }

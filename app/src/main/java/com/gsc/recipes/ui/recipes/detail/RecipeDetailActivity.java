@@ -2,7 +2,11 @@ package com.gsc.recipes.ui.recipes.detail;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +20,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class RecipeDetailActivity extends BaseActivity implements RecipeDetailView {
 
@@ -26,6 +31,8 @@ public class RecipeDetailActivity extends BaseActivity implements RecipeDetailVi
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.toolbar_layout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.recipe_image)
     ImageView imageView;
     @BindView(R.id.recipe_title)
@@ -51,6 +58,8 @@ public class RecipeDetailActivity extends BaseActivity implements RecipeDetailVi
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
+        collapsingToolbarLayout.setExpandedTitleColor(Color.TRANSPARENT);
 
         presenter.create();
         presenter.setView(this);
@@ -61,10 +70,17 @@ public class RecipeDetailActivity extends BaseActivity implements RecipeDetailVi
         getActivityComponent().inject(this);
     }
 
+    //region Events
+    @OnClick(R.id.recipe_url)
+    public void onWebClick() {
+        presenter.onWebClick();
+    }
+    //endregion
+
     //region RecipeDetailView
     @Override
     public void setImage(String imageUrl) {
-        Picasso.get().load(imageUrl).into(imageView);
+        Picasso.get().load(imageUrl).placeholder(R.drawable.recipe_placeholder).into(imageView);
     }
 
     @Override
@@ -79,7 +95,14 @@ public class RecipeDetailActivity extends BaseActivity implements RecipeDetailVi
 
     @Override
     public void setUrl(String url) {
+        urlView.setPaintFlags(urlView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         urlView.setText(url);
+    }
+
+    @Override
+    public void openWeb(Uri uri) {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(browserIntent);
     }
     //endregion
 }

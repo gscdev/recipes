@@ -5,14 +5,19 @@ import com.gsc.recipes.domain.model.SearchParams;
 import com.gsc.recipes.domain.usecase.GetRecipesUseCase;
 import com.gsc.recipes.ui.base.BasePresenter;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import static android.text.TextUtils.isEmpty;
 import static java.util.Collections.emptyList;
+
 
 public class RecipeListPresenter extends BasePresenter<RecipeListView>
         implements GetRecipesUseCase.Callback<List<Recipe>> {
+
+    public static final int DEFAULT_PAGE = 1;
 
     private GetRecipesUseCase getRecipesUseCase;
 
@@ -33,10 +38,17 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
 
 
     public void onSearchTextChange(String searchText) {
-        if (isNewString(searchText)) {
+        if (isEmptyString(searchText)) {
+            getView().showWithoutRecipesText();
+            getView().setRecipes(Collections.emptyList());
+        } else if (isNewString(searchText)) {
             lastSearchText = searchText;
             getRecipes();
         }
+    }
+
+    private boolean isEmptyString(String searchText) {
+        return (searchText == null) || isEmpty(searchText.trim());
     }
 
     private boolean isNewString(String searchText) {
@@ -45,7 +57,7 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
 
     private void getRecipes() {
         searchParams.setSearchText(lastSearchText);
-        searchParams.setPage(1);
+        searchParams.setPage(DEFAULT_PAGE);
 
         getRecipesUseCase.execute(searchParams, this);
     }
@@ -54,12 +66,14 @@ public class RecipeListPresenter extends BasePresenter<RecipeListView>
     @Override
     public void onSuccess(List<Recipe> recipeList) {
         this.recipeList = recipeList;
+
+        getView().hideWithoutRecipesText();
         getView().setRecipes(recipeList);
     }
 
     @Override
     public void onError() {
-        recipeList = emptyList();
+        getView().showErrorMessage();
     }
     //endregion
 

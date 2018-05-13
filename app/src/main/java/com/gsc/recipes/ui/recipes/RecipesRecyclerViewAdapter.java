@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 import static android.text.TextUtils.isEmpty;
 
+
 class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerViewAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
@@ -52,14 +53,19 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
 
     private void setImage(ImageView imageView, String imageUrl) {
         if (isEmpty(imageUrl)) {
-            imageView.setImageDrawable(null);
+            Picasso.get().load(R.drawable.recipe_placeholder).into(imageView);
         } else {
             Picasso.get().load(imageUrl).into(imageView);
         }
     }
 
+    public void refreshRecipes(List<Recipe> recipeList) {
+        recipes.clear();
+        recipes = recipeList;
+        notifyDataSetChanged();
+    }
 
-    @Override
+        @Override
     public int getItemCount() {
         return recipes.size();
     }
