@@ -52,7 +52,7 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
 
     private void setImage(ImageView imageView, String imageUrl) {
         if (isEmpty(imageUrl)) {
-            imageView.setImageDrawable(null);
+            Picasso.get().load(R.drawable.recipe_placeholder).into(imageView);
         } else {
             Picasso.get().load(imageUrl).into(imageView);
         }

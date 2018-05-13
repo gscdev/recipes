@@ -21,8 +21,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@android:color/darker_gray"
-            android:scaleType="centerCrop"/>
+            android:background="@color/lighter_gray"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/recipe_placeholder"/>
 
         <TextView
             android:id="@+id/item_title"
