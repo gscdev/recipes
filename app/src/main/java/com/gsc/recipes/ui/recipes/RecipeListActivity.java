@@ -14,12 +14,14 @@ import com.gsc.recipes.ui.base.BaseActivity;
 import com.gsc.recipes.ui.recipes.detail.RecipeDetailActivity;
 import com.gsc.recipes.ui.view.OnItemClickListener;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class RecipeListActivity extends BaseActivity implements RecipeListView,
         SearchView.OnQueryTextListener, OnItemClickListener<Integer> {
@@ -34,6 +36,8 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
     @BindView(R.id.recipe_list)
     RecyclerView recyclerView;
 
+    RecipesRecyclerViewAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +48,17 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
 
         setSupportActionBar(toolbar);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setUpView();
 
         presenter.create();
         presenter.setView(this);
+    }
+
+    private void setUpView() {
+        adapter = new RecipesRecyclerViewAdapter(Collections.emptyList(), this);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -64,6 +75,7 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
     protected void onDestroy() {
         presenter.destroy();
         super.onDestroy();
+        recyclerView.setAdapter(null);
     }
 
     private void initializeDagger() {
@@ -96,7 +108,7 @@ public class RecipeListActivity extends BaseActivity implements RecipeListView,
 
     @Override
     public void setRecipes(List<Recipe> recipes) {
-        recyclerView.setAdapter(new RecipesRecyclerViewAdapter(recipes, this));
+        adapter.refreshRecipes(recipes);
     }
 
     @Override

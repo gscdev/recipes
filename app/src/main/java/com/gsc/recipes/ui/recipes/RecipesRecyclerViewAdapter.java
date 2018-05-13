@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 
 import static android.text.TextUtils.isEmpty;
 
+
 class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerViewAdapter.ViewHolder> {
 
     private OnItemClickListener listener;
@@ -58,8 +59,13 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
         }
     }
 
+    public void refreshRecipes(List<Recipe> recipeList) {
+        recipes.clear();
+        recipes = recipeList;
+        notifyDataSetChanged();
+    }
 
-    @Override
+        @Override
     public int getItemCount() {
         return recipes.size();
     }
