@@ -10,11 +10,14 @@ import android.widget.TextView;
 
 import com.gsc.recipes.R;
 import com.gsc.recipes.domain.model.Recipe;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.text.TextUtils.isEmpty;
 
 class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerViewAdapter.ViewHolder> {
 
@@ -34,8 +37,15 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Recipe recipe = recipes.get(position);
+
         holder.title.setText(recipe.getTitle());
         holder.ingredients.setText(recipe.getIngredients());
+
+        if (isEmpty(recipe.getImage())) {
+            Picasso.get().load(android.R.color.darker_gray);
+        } else {
+            Picasso.get().load(recipe.getImage()).into(holder.image);
+        }
     }
 
     @Override
