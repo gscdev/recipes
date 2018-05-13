@@ -42,7 +42,7 @@ class RecipesRecyclerViewAdapter extends RecyclerView.Adapter<RecipesRecyclerVie
         holder.ingredients.setText(recipe.getIngredients());
 
         if (isEmpty(recipe.getImage())) {
-            Picasso.get().load(android.R.color.darker_gray);
+            holder.image.setImageDrawable(null);
         } else {
             Picasso.get().load(recipe.getImage()).into(holder.image);
         }
