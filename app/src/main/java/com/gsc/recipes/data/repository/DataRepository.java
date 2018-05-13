@@ -2,6 +2,7 @@ package com.gsc.recipes.data.repository;
 
 
 import com.gsc.recipes.data.repository.datasource.ApiDataSource;
+import com.gsc.recipes.data.response.RecipesResponse;
 
 import javax.inject.Inject;
 
@@ -16,7 +17,7 @@ public class DataRepository {
     }
 
 
-    public void getRecipes(String ingredients, String searchText, int page) {
-        apiDataSource.getRecipes(ingredients, searchText, page);
+    public RecipesResponse getRecipes(String ingredients, String searchText, int page) {
+        return apiDataSource.getRecipes(ingredients, searchText, page);
     }
 }
